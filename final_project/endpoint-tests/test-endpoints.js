@@ -170,10 +170,12 @@ test('PUT + DELETE /customer/auth/review/1 — session + JWT (same agent)', asyn
       `PUT review: server error ${putRes.status}. Check route handler (e.g. undefined variable in jwt.verify). ${bodyPreview(putRes)}`
     );
   }
-  assert.equal(putRes.status, 201, `PUT review: expected 201, got ${putRes.status}`);
+  assert.equal(putRes.status, 200, `PUT review: expected 200, got ${putRes.status}`);
   assert.ok(
-    putRes.body && putRes.body.message === 'success',
-    `PUT review: expected { message: 'success' }, got: ${bodyPreview(putRes)}`
+    putRes.body &&
+      putRes.body.message === 'Review for ISBN 1 added or updated' &&
+      typeof putRes.body.reviews === 'object',
+    `PUT review: expected updated review payload, got: ${bodyPreview(putRes)}`
   );
 
   let delRes;
@@ -188,9 +190,9 @@ test('PUT + DELETE /customer/auth/review/1 — session + JWT (same agent)', asyn
   if (delRes.status >= 500) {
     assert.fail(`DELETE review: server error ${delRes.status}. ${bodyPreview(delRes)}`);
   }
-  assert.equal(delRes.status, 201, `DELETE review: expected 201, got ${delRes.status}`);
+  assert.equal(delRes.status, 200, `DELETE review: expected 200, got ${delRes.status}`);
   assert.ok(
-    delRes.body && delRes.body.message === 'success',
-    `DELETE review: expected { message: 'success' }, got: ${bodyPreview(delRes)}`
+    delRes.body && delRes.body.message === 'Review for ISBN 1 deleted',
+    `DELETE review: expected delete confirmation message, got: ${bodyPreview(delRes)}`
   );
 });

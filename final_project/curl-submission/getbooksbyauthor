@@ -1,2 +1,2 @@
 curl -sS -g "http://localhost:5001/author/Chinua%20Achebe"
-{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}
+[{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}]
